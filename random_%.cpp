@@ -34,7 +34,7 @@ int main() {
     for(int i = 0; i < n; ++i) {
         if (i >= n*per) r = randomInts(generator);
         claus << r << endl;
-        if (i%mod == 0 and i != 0) text << r << endl;
+        if (i%mod == 0 and per_claus != 0) text << r << endl;
         else {
             r2 = randomInts(generator);
             text << r2 << endl;
