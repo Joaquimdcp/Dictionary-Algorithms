@@ -11,6 +11,8 @@
 *.o
 *.obj
 
+*.txt
+
 # Precompiled Headers
 *.gch
 *.pch

@@ -12,6 +12,7 @@ using namespace std;
 dicothomic::dicothomic()
 {
     dictionary = {0};
+    comparacions = 0;
 }
 
 dicothomic::~dicothomic()
@@ -26,11 +27,23 @@ bool dicothomic::search(unsigned int key)
 
 bool dicothomic::dichotomic_s(const unsigned int &query, const vector<unsigned int> &numbersVector, int left, int right)
 {
-    if (left > right or left < 0) return false;
-    if (left == right) return (numbersVector[left] == query);
+    if (left > right or left < 0){
+      comparacions++;
+      return false;
+    }
+    if (left == right) {
+      comparacions++;
+      return (numbersVector[left] == query);
+    }
     int middle = (right + left) / 2;
-    if (numbersVector[middle] < query) return dichotomic_s(query, numbersVector, middle + 1, right);
-    else if (numbersVector[middle] > query) return dichotomic_s(query, numbersVector, left, middle - 1);
+    if (numbersVector[middle] < query){
+      comparacions++;
+      return dichotomic_s(query, numbersVector, middle + 1, right);
+    }
+    else if (numbersVector[middle] > query){
+      comparacions++;
+      return dichotomic_s(query, numbersVector, left, middle - 1);
+    }
     else return true;
 }
 
@@ -42,4 +55,9 @@ void dicothomic::insert(int key){
 
 int dicothomic::get(int key){
     return dictionary[key];
+}
+
+
+int dicothomic::get_comparacions(){
+  return comparacions;
 }
