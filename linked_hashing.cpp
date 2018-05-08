@@ -15,14 +15,14 @@ const int TABLE_SIZE = 128;
 class HashNode
 {
     public:
-   .    int key;
+      int key;
 	    int value;
-	    HashNode* next;
+	    HashNode* follow;
         HashNode(int key, int value)
         {
             this->key = key;
 	        this->value = value;
-	        this->next = NULL;
+	        this->follow = NULL;
         }
 };
 
@@ -45,12 +45,12 @@ class HashMap
         ~HashMap()
         {
             for (int i = 0; i < TABLE_SIZE; ++i)
-	    {
+	          {
                 HashNode* entry = htable[i];
                 while (entry != NULL)
-	        {
+	              {
                     HashNode* prev = entry;
-                    entry = entry->next;
+                    entry = entry->follow;
                     delete prev;
                 }
             }
@@ -75,18 +75,18 @@ class HashMap
             while (entry != NULL)
             {
                 prev = entry;
-                entry = entry->next;
+                entry = entry->follow;
             }
             if (entry == NULL)
             {
                 entry = new HashNode(key, value);
                 if (prev == NULL)
-	        {
+	              {
                     htable[hash_val] = entry;
                 }
 	        else
 	        {
-                    prev->next = entry;
+                    prev->follow = entry;
                 }
             }
             else
@@ -99,22 +99,22 @@ class HashMap
          */
         void Remove(int key)
         {
-            int hash_val = HashFunc(key);
-            HashNode* entry = htable[hash_val];
+            int pos = HashFunc(key);
+            HashNode* entry = htable[pos];
             HashNode* prev = NULL;
             if (entry == NULL || entry->key != key)
             {
-            	cout<<"No Element found at key "<<key<<endl;
+            	  cout << "No Element found at key " << key <<endl;
                 return;
             }
-            while (entry->next != NULL)
+            while (entry->follow != NULL)
 	    {
                 prev = entry;
-                entry = entry->next;
+                entry = entry->follow;
             }
             if (prev != NULL)
             {
-                prev->next = entry->next;
+                prev->follow = entry->follow;
             }
             delete entry;
             cout<<"Element Deleted"<<endl;
@@ -125,16 +125,16 @@ class HashMap
         int Search(int key)
         {
             bool flag = false;
-            int hash_val = HashFunc(key);
-            HashNode* entry = htable[hash_val];
+            int pos  = HashFunc(key);
+            HashNode* entry = htable[pos];
             while (entry != NULL)
 	    {
                 if (entry->key == key)
 	        {
-                    cout<<entry->value<<" ";
+                    cout<<"Value found at"<< pos ;
                     flag = true;
                 }
-                entry = entry->next;
+                entry = entry->follow;
             }
             if (!flag)
                 return -1;
