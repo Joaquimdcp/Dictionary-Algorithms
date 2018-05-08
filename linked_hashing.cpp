@@ -64,6 +64,13 @@ class HashMap
             return key % TABLE_SIZE;
         }
 
+        int Universal(int key)
+        {
+            //AFEGIM UN SWITCH QUAN FAIGUE FALTA AMB UN RAND I LLEST
+            return key % TABLE_SIZE;
+        }
+
+
         /*
          * Insert Element at a key
          */
