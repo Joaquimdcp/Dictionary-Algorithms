@@ -7,7 +7,6 @@
 #include<string>
 #include<cstdio>
 using namespace std;
-const int TABLE_SIZE = 128;
 
 /*
  * HashNode Class Declaration
