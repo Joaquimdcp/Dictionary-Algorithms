@@ -6,7 +6,7 @@ using namespace std;
 
 
 int main(){
-    dicothomic dic;
+    bst dic;
     ifstream dictionary("claus");
     unsigned int num;
     int i = 0;

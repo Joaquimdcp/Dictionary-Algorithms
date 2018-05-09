@@ -20,6 +20,7 @@ class bst
     void free();
     void inorder_print();
     void print_tree();
+    int get_comparacions();
 
   private:
     void free(node *nd);
@@ -27,6 +28,6 @@ class bst
     node *search(int key, node *nd);
     void inorder_print(node *nd);
     void print_tree(node *nd);
-
+    int comparacions;
     node *root;
 };

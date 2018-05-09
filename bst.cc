@@ -3,6 +3,7 @@
 bst::bst()
 {
     root = NULL;
+    comparacions = 0;
 }
 
 bst::~bst()
@@ -23,6 +24,7 @@ void bst::free(node *nd)
 void bst::insert(int key, node *nd)
 {
 
+    comparacions++;
     if (key < nd->value)
     {
         if (nd->left != NULL)
@@ -37,19 +39,22 @@ void bst::insert(int key, node *nd)
             nd->left->right = NULL;
         }
     }
-    else if (key >= nd->value)
-    {
-        if (nd->right != NULL)
-        {
-            insert(key, nd->right);
-        }
-        else
-        {
-            nd->right = new node;
-            nd->right->value = key;
-            nd->right->right = NULL;
-            nd->right->left = NULL;
-        }
+    else{
+      comparacions++;
+      if (key >= nd->value)
+      {
+          if (nd->right != NULL)
+          {
+              insert(key, nd->right);
+          }
+          else
+          {
+              nd->right = new node;
+              nd->right->value = key;
+              nd->right->right = NULL;
+              nd->right->left = NULL;
+          }
+      }
     }
 }
 
@@ -131,4 +136,8 @@ void bst::print_tree(node *nd)
         inorder_print(nd->right);
         cout << nd->value << ",";
     }
+}
+
+int bst::get_comparacions(){
+  return comparacions;
 }
