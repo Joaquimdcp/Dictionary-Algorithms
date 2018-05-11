@@ -2,11 +2,19 @@
 #include <fstream>
 #include "dichotomic_quim.hh"
 #include "bst.hh"
+#include "hash.hh"
 using namespace std;
 
 
 int main(){
-    dichotomic dic;
+
+    //dichotomic dic;
+
+    int hashSize;                                   //Comentar
+    cout << "Input hash table size:" << endl;       //quan
+    cin >> hashSize;                                //sigui
+    hash_table dic = hash_table(hashSize);          //dichotomic
+
     ifstream dictionary("claus");
     unsigned int num;
     chrono::time_point<chrono::system_clock> start, end;
@@ -19,11 +27,11 @@ int main(){
         //cout << "LOAD " << i << " ELEMENTS " << endl;
         i++;
     }
-    dic.sortDic();
+    //dic.sortDic();                                // Descomentar quan sigui dichotomic
     end = chrono::system_clock::now();
     elapsed = end - start;
 
-    cout << "Insertion time: " << elapsed.count() << " s." << endl;
+    //cout << "Insertion time: " << elapsed.count() << " s." << endl;
 
     ifstream text("text");
     unsigned int query;
