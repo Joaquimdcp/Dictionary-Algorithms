@@ -9,23 +9,23 @@
 
 using namespace std;
 
-dicothomic::dicothomic()
+dichotomic::dichotomic()
 {
     dictionary = {0};
     comparacions = 0;
 }
 
-dicothomic::~dicothomic()
+dichotomic::~dichotomic()
 {
     return;
 }
 
-bool dicothomic::search(unsigned int key)
+bool dichotomic::search(unsigned int key)
 {
     return dichotomic_s(key, dictionary, 0, int(dictionary.size() - 1));
 }
 
-bool dicothomic::dichotomic_s(const unsigned int &query, const vector<unsigned int> &numbersVector, int left, int right)
+bool dichotomic::dichotomic_s(const unsigned int &query, const vector<unsigned int> &numbersVector, int left, int right)
 {
     if (left > right or left < 0){
       comparacions++;
@@ -48,16 +48,20 @@ bool dicothomic::dichotomic_s(const unsigned int &query, const vector<unsigned i
 }
 
 
-void dicothomic::insert(int key){
+void dichotomic::insert(int key){
     dictionary.push_back(key);
+    //sort(dictionary.begin(), dictionary.end());
+}
+
+void dichotomic::sortDic(){
     sort(dictionary.begin(), dictionary.end());
 }
 
-int dicothomic::get(int key){
+int dichotomic::get(int key){
     return dictionary[key];
 }
 
 
-int dicothomic::get_comparacions(){
+int dichotomic::get_comparacions(){
   return comparacions;
 }

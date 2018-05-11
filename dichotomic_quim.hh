@@ -1,17 +1,18 @@
 #include <vector>
 using namespace std;
 
-class dicothomic
+class dichotomic
 {
   private:
     vector<unsigned int> dictionary;
     int comparacions;
 
   public:
-    dicothomic();
-    ~dicothomic();
+    dichotomic();
+    ~dichotomic();
 
     void insert(int key);
+    void sortDic();
     bool  search(unsigned int key);
     int  get(int key);
     int get_comparacions();
