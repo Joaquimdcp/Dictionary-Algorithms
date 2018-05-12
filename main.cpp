@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include "dichotomic_quim.hh"
 #include "bst.hh"
 #include "hash.hh"
@@ -14,6 +15,8 @@ int main(){
     cout << "Input hash table size:" << endl;       //quan
     cin >> hashSize;                                //sigui
     hash_table dic = hash_table(hashSize);          //dichotomic
+    dichotomic dic2 = dichotomic();
+
 
     ifstream dictionary("claus");
     unsigned int num;
@@ -24,25 +27,29 @@ int main(){
     start = chrono::system_clock::now();
     while (dictionary >> num){
         dic.insert(num);
+        dic2.insert(num);
         //cout << "LOAD " << i << " ELEMENTS " << endl;
         i++;
     }
-    //dic.sortDic();                                // Descomentar quan sigui dichotomic
+    dic2.sortDic();                                // Descomentar quan sigui dichotomic
     end = chrono::system_clock::now();
     elapsed = end - start;
 
-    //cout << "Insertion time: " << elapsed.count() << " s." << endl;
+    cout << "Insertion time: " << elapsed.count() << " s." << endl;
+
 
     ifstream text("text");
     unsigned int query;
     start = chrono::system_clock::now();
     while (text >> query){
         dic.search(query);
-        //cout << "NUMERO DE COMPARACIONS " << dic.get_comparacions() << endl;
+        dic2.search(query);
+
     }
     end = chrono::system_clock::now();
     elapsed = end - start;
 
     cout << "Search time: " << elapsed.count() << " s." << endl;
-
+    cout << "NUMERO DE COMPARACIONS DICOTOMICA" << dic2.get_comparacions() << endl;
+    cout << "NUMERO DE COMPARACIONS HASH TABLE ARRAY" << dic2.get_comparacions() << endl;
 }
