@@ -11,13 +11,13 @@ int main() {
     int n;
     double per, per_claus;
 
-    cout << "Quants nombres vols generar?" << endl;
+    //cout << "Quants nombres vols generar?" << endl;
     cin >> n;
 
-    cout << "Percentatge de repetits(en decimal):" << endl;
+    //cout << "Percentatge de repetits(en decimal):" << endl;
     cin >> per;
 
-    cout << "Percentatge de claus al text(en decimal):" << endl;
+    //cout << "Percentatge de claus al text(en decimal):" << endl;
     cin >> per_claus;
 
     long unsigned int r, r2;

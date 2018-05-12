@@ -10,9 +10,13 @@ class hash_table
 
     void insert(int key);
     bool search(int key);
+    int get_comparacions();
+
 
   private:
     vector<vector<unsigned int> > dictionary;
+    int comparacions;
     int hash_function(int key);
+
 };
 
