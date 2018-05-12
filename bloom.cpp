@@ -48,7 +48,6 @@ void bloom::insert(unsigned int key){
 }
 
 bool bloom::search(unsigned int key){
-    comparacions = 0;
     for(int i = 0; i < total_functions; i++){
         comparacions++;
         if(not dictionary[hash_functions(i,key)]) return false;

@@ -6,6 +6,7 @@
 #include "hash.hh"
 #include "bloom.hh"
 #include "linked_hashing.hh"
+#include "trie.hh"
 using namespace std;
 
 
@@ -21,6 +22,7 @@ int main(){
     dichotomic dic2 = dichotomic();
     bst dic4 = bst();
     bloom dic5 = bloom();
+    //Trie dic6 = Trie();
 
 
 
@@ -37,6 +39,7 @@ int main(){
         dic3.insert(num);
         dic4.insert(num);
         dic5.insert(num);
+        //dic6.insert(num);
         //cout << "LOAD " << i << " ELEMENTS " << endl;
         i++;
     }
@@ -56,6 +59,7 @@ int main(){
         dic3.search(query);
         dic4.search(query);
         dic5.search(query);
+       // dic6.search(query);
 
     }
     end = chrono::system_clock::now();
@@ -67,4 +71,5 @@ int main(){
     cout << "HASH TABLE ARRAY " << dic.get_comparacions() << endl;
     cout << "HASH TABLE LINKED " << dic3.get_comparacions() << endl;
     cout << "BLOOM          "    << dic5.get_comparacions() << endl;
+ //   cout << "TRIE          "    << dic6.get_comparacions() << endl;
 }

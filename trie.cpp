@@ -1,91 +1,81 @@
-// C++ implementation of search and insert
-// operations on Trie
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+#include "trie.hh"
+
 using namespace std;
- 
-const int ALPHABET_SIZE = 2;
- 
-// trie node
-struct TrieNode
+
+Trie::Trie()
 {
-    struct TrieNode *children[ALPHABET_SIZE];
- 
-    // isEndOfWord is true if the node represents
-    // end of a word
-    bool isEndOfWord;
-};
- 
-// Returns new trie node (initialized to NULLs)
-struct TrieNode *getNode(void)
-{
-    struct TrieNode *pNode =  new TrieNode;
- 
-    pNode->isEndOfWord = false;
- 
-    for (int i = 0; i < ALPHABET_SIZE; i++)
-        pNode->children[i] = NULL;
- 
-    return pNode;
-}
- 
-// If not present, inserts key into trie
-// If the key is prefix of trie node, just
-// marks leaf node
-void insert(struct TrieNode *root, string key)
-{
-    struct TrieNode *pCrawl = root;
- 
-    for (int i = 0; i < key.length(); i++)
-    {
-        int index = key[i] - '0';
-        if (!pCrawl->children[index])
-            pCrawl->children[index] = getNode();
- 
-        pCrawl = pCrawl->children[index];
-    }
- 
-    // mark last node as leaf
-    pCrawl->isEndOfWord = true;
+    comparacions = 0;
+    root.key = -1;
 }
 
-// Returns true if key presents in trie, else
-// false
-bool search(struct TrieNode *root, string key)
+Trie::~Trie()
 {
-    struct TrieNode *pCrawl = root;
- 
-    for (int i = 0; i < key.length(); i++)
-    {
-        int index = key[i] - '0';
-        if (!pCrawl->children[index])
-            return false;
- 
-        pCrawl = pCrawl->children[index];
-    }
- 
-    return (pCrawl != NULL && pCrawl->isEndOfWord);
+    root.key = -1;
 }
- 
-// Driver
-int main()
+
+// function to convert decimal to binary
+void decToBinary(unsigned int n, vector<int>& resultatBin)
 {
-    // Input keys (use only 'a' through 'z'
-    // and lower case)
-    string keys[] = {"the", "a", "there",
-                    "answer", "any", "by",
-                     "bye", "their" };
-    int n = sizeof(keys)/sizeof(keys[0]);
- 
-    struct TrieNode *root = getNode();
- 
-    // Construct trie
-    for (int i = 0; i < n; i++)
-        insert(root, keys[i]);
- 
-    // Search for different keys
-    search(root, "the")? cout << "Yes\n" :
-                         cout << "No\n";
-    search(root, "these")? cout << "Yes\n" :
-                           cout << "No\n";
-    return 0;
+    int i = 0;
+    while (n > 0)
+    {
+        resultatBin[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+}
+
+void Trie::insert(unsigned int n)
+{
+
+    map<int, Slot *> *current_tree = &root.stree;
+    map<int, Slot *>::iterator it;
+
+    vector<int> word_bin(1000);
+    decToBinary(n, word_bin);
+
+    for (int i = 0; i < word_bin.size(); ++i)
+    {
+        int val = word_bin[i];
+        if ((it = current_tree->find(val)) != current_tree->end())
+        {
+            current_tree = &it->second->stree;
+            continue;
+        }
+
+        if (it == current_tree->end())
+        {
+            Slot *new_node = new Slot();
+            new_node->key = val;
+            (*current_tree)[val] = new_node;
+            current_tree = &new_node->stree;
+        }
+    }
+}
+
+bool Trie::search(unsigned int n)
+{
+    map< int, Slot* > sub_tree = root.stree;
+    map< int, Slot* >::iterator it;
+
+    vector<int> word_bin(1000);
+    decToBinary(n, word_bin);
+
+    for (int i = 0; i < word_bin.size(); ++i)
+    {
+        comparacions++;
+        if ((it = sub_tree.find(word_bin[i])) == sub_tree.end()) //POTSER PODEM CANVIARO PERO NOMES HI HA DOS VALORS PER TANT...
+            return false;
+
+        sub_tree = it->second->stree;
+    }
+    return true;
+}
+
+int Trie::get_comparacions(){
+    return comparacions;
 }
