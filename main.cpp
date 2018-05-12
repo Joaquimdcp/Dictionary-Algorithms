@@ -4,6 +4,7 @@
 #include "dichotomic_quim.hh"
 #include "bst.hh"
 #include "hash.hh"
+#include "linked_hashing.hh"
 using namespace std;
 
 
@@ -14,8 +15,11 @@ int main(){
     int hashSize;                                   //Comentar
     //cout << "Input hash table size:" << endl;       //quan
     cin >> hashSize;                                //sigui
+    Linked dic3 = Linked(hashSize);
     hash_table dic = hash_table(hashSize);          //dichotomic
     dichotomic dic2 = dichotomic();
+    bst dic4 = bst();
+
 
 
     ifstream dictionary("claus");
@@ -28,6 +32,8 @@ int main(){
     while (dictionary >> num){
         dic.insert(num);
         dic2.insert(num);
+        dic3.insert(num);
+        dic4.insert(num);
         //cout << "LOAD " << i << " ELEMENTS " << endl;
         i++;
     }
@@ -44,12 +50,15 @@ int main(){
     while (text >> query){
         dic.search(query);
         dic2.search(query);
+        dic3.search(query);
 
     }
     end = chrono::system_clock::now();
     elapsed = end - start;
 
     //cout << "Search time: " << elapsed.count() << " s." << endl;
-    cout << "DICOTOMICA " << dic2.get_comparacions() << endl;
+    cout << "DICOTOMICA  ARRAY " << dic2.get_comparacions() << endl;
+    cout << "BST         ARRAY " << dic4.get_comparacions() << endl;
     cout << "HASH TABLE ARRAY " << dic.get_comparacions() << endl;
+    cout << "HASH TABLE LINKED " << dic3.get_comparacions() << endl;
 }

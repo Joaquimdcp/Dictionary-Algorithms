@@ -2,147 +2,100 @@
  * C++ Program to Implement Hash Tables chaining
  * with Singly Linked Lists
  */
-#include<iostream>
-#include<cstdlib>
-#include<string>
-#include<cstdio>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cstdio>
+#include <vector>
+#include "linked_hashing.hh"
 using namespace std;
 
-/*
- * HashNode Class Declaration
- */
-class HashNode
+HashNode::HashNode(unsigned int key)
 {
-    public:
-      int key;
-	    int value;
-	    HashNode* follow;
-        HashNode(int key, int value)
-        {
-            this->key = key;
-	        this->value = value;
-	        this->follow = NULL;
-        }
-};
+    this->key = key;
+    this->follow = NULL;
+}
 
-/*
- * HashMap Class Declaration
- */
-class HashMap
+Linked::Linked(int size)
 {
-    private:
-        HashNode** htable;
+    size_table = size;
+    comparacions = 0;
+    htable = vector<HashNode*>(size);
+    for (int i = 0; i < size_table; i++)
+        htable[i] = NULL;
 
-    public:
-        HashMap()
-        {
-            htable = new HashNode*[TABLE_SIZE];
-            for (int i = 0; i < TABLE_SIZE; i++)
-                htable[i] = NULL;
-        }
+}
 
-        ~HashMap()
-        {
-            for (int i = 0; i < TABLE_SIZE; ++i)
-	          {
-                HashNode* entry = htable[i];
-                while (entry != NULL)
-	              {
-                    HashNode* prev = entry;
-                    entry = entry->follow;
-                    delete prev;
-                }
-            }
-            delete[] htable;
-        }
-        /*
-         * Hash Function
-         */
-        int HashFunc(int key)
-        {
-            return key % TABLE_SIZE;
-        }
+int Linked::HashFunc(unsigned int key)
+{
+    return key % size_table;
+}
 
-        int Universal(int key)
-        {
-            //AFEGIM UN SWITCH QUAN FAIGUE FALTA AMB UN RAND I LLEST
-            return key % TABLE_SIZE;
-        }
+int Linked::Universal(int key)
+{
+    //AFEGIM UN SWITCH QUAN FAIGUE FALTA AMB UN RAND I LLEST
+    return key % size_table;
+}
 
+void Linked::insert(unsigned int key)
+{
+    int hash_val = HashFunc(key);
+    HashNode *prev = NULL;
+    HashNode *entry = htable[hash_val];
+    while (entry != NULL)
+    {
+        prev = entry;
+        entry = entry->follow;
+    }
+    if (entry == NULL)
+    {
+        entry = new HashNode(key);
+        if (prev == NULL)
+        {
+            htable[hash_val] = entry;
+        }
+        else
+        {
+            prev->follow = entry;
+        }
+    }
+}
 
-        /*
-         * Insert Element at a key
-         */
-        void Insert(int key, int value)
-        {
-            int hash_val = HashFunc(key);
-            HashNode* prev = NULL;
-            HashNode* entry = htable[hash_val];
-            while (entry != NULL)
-            {
-                prev = entry;
-                entry = entry->follow;
-            }
-            if (entry == NULL)
-            {
-                entry = new HashNode(key, value);
-                if (prev == NULL)
-	              {
-                    htable[hash_val] = entry;
-                }
-	        else
-	        {
-                    prev->follow = entry;
-                }
-            }
-            else
-            {
-                entry->value = value;
-            }
-        }
-        /*
-         * Remove Element at a key
-         */
-        void Remove(int key)
-        {
-            int pos = HashFunc(key);
-            HashNode* entry = htable[pos];
-            HashNode* prev = NULL;
-            if (entry == NULL || entry->key != key)
-            {
-            	  cout << "No Element found at key " << key <<endl;
-                return;
-            }
-            while (entry->follow != NULL)
-	    {
-                prev = entry;
-                entry = entry->follow;
-            }
-            if (prev != NULL)
-            {
-                prev->follow = entry->follow;
-            }
-            delete entry;
-            cout<<"Element Deleted"<<endl;
-        }
-        /*
-         * Search Element at a key
-         */
-        int Search(int key)
-        {
-            bool flag = false;
-            int pos  = HashFunc(key);
-            HashNode* entry = htable[pos];
-            while (entry != NULL)
-	    {
-                if (entry->key == key)
-	        {
-                    cout<<"Value found at"<< pos ;
-                    flag = true;
-                }
-                entry = entry->follow;
-            }
-            if (!flag)
-                return -1;
-        }
-};
+void Linked::remove(unsigned int key)
+{
+    int pos = HashFunc(key);
+    HashNode *entry = htable[pos];
+    HashNode *prev = NULL;
+    if (entry == NULL || entry->key != key)
+    {
+        return;
+    }
+    while (entry->follow != NULL)
+    {
+        prev = entry;
+        entry = entry->follow;
+    }
+    if (prev != NULL)
+    {
+        prev->follow = entry->follow;
+    }
+    delete entry;
+}
+
+bool Linked::search(unsigned int key)
+{
+    bool flag = false;
+    int pos = HashFunc(key);
+    HashNode *entry = htable[pos];
+    while (entry != NULL)
+    {
+        comparacions++;
+        if (entry->key == key) return true;
+        entry = entry->follow;
+    }
+    return false;
+}
+
+int Linked::get_comparacions(){
+    return comparacions;
+}
