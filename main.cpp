@@ -4,6 +4,7 @@
 #include "dichotomic_quim.hh"
 #include "bst.hh"
 #include "hash.hh"
+#include "bloom.hh"
 #include "linked_hashing.hh"
 using namespace std;
 
@@ -19,6 +20,7 @@ int main(){
     hash_table dic = hash_table(hashSize);          //dichotomic
     dichotomic dic2 = dichotomic();
     bst dic4 = bst();
+    bloom dic5 = bloom();
 
 
 
@@ -34,6 +36,7 @@ int main(){
         dic2.insert(num);
         dic3.insert(num);
         dic4.insert(num);
+        dic5.insert(num);
         //cout << "LOAD " << i << " ELEMENTS " << endl;
         i++;
     }
@@ -51,6 +54,8 @@ int main(){
         dic.search(query);
         dic2.search(query);
         dic3.search(query);
+        dic4.search(query);
+        dic5.search(query);
 
     }
     end = chrono::system_clock::now();
@@ -61,4 +66,5 @@ int main(){
     cout << "BST         ARRAY " << dic4.get_comparacions() << endl;
     cout << "HASH TABLE ARRAY " << dic.get_comparacions() << endl;
     cout << "HASH TABLE LINKED " << dic3.get_comparacions() << endl;
+    cout << "BLOOM          "    << dic5.get_comparacions() << endl;
 }

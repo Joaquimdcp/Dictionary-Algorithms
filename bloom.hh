@@ -9,6 +9,9 @@ class bloom {
         int total_functions;
 
     public:
+        bloom();
         void insert(unsigned int key);
-        void search(unsigned int key);
-}
+        bool search(unsigned int key);
+        int hash_functions(int f, unsigned int key);
+        int get_comparacions();
+};

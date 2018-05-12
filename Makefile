@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 
-SOURCE=main.cpp hash.o bst.o dichotomic_quim.o linked_hashing.o
+SOURCE=main.cpp hash.o bst.o dichotomic_quim.o linked_hashing.o bloom.o
 MYPROGRAM=main
 
 CC=g++ -std=c++11
